@@ -1,3 +1,4 @@
+//inits
 const { src, dest, watch, series, parallel, lastRun } = require('gulp');
 const $ = require('gulp-load-plugins')();
 const del = require('del');
@@ -6,8 +7,9 @@ const autoprefixer = require('autoprefixer');
 const postcssNormalize = require('postcss-normalize');
 const browserSync = require('browser-sync').create();
 
-const dev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
 
+//scripts
 const develop = series(clean, parallel(styles, scripts, fonts), function startAppServer() {
   browserSync.init({
     notify: false,
@@ -44,6 +46,7 @@ const serveDist = series(build, function startDistServer() {
   });
 });
 
+//tasks
 function clean() {
   return del(['.tmp', 'dist'])
 }
@@ -59,7 +62,7 @@ function concat() {
 function styles() {
   return src('src/styles/*.scss')
     .pipe($.plumber())
-    .pipe($.if(dev, $.sourcemaps.init()))
+    .pipe($.if(isDev, $.sourcemaps.init()))
     .pipe($.sass.sync({
       outputStyle: 'expanded',
       precision: 10,
@@ -69,7 +72,7 @@ function styles() {
       postcssNormalize(),
       autoprefixer()
     ]))
-    .pipe($.if(dev, $.sourcemaps.write()))
+    .pipe($.if(isDev, $.sourcemaps.write()))
     .pipe(dest('.tmp/styles'))
     .pipe(browserSync.reload({stream: true}));
 }
@@ -77,9 +80,9 @@ function styles() {
 function scripts() {
   return src('src/scripts/**/*.js')
     .pipe($.plumber())
-    .pipe($.if(dev, $.sourcemaps.init()))
+    .pipe($.if(isDev, $.sourcemaps.init()))
     .pipe($.babel())
-    .pipe($.if(dev, $.sourcemaps.write('.')))
+    .pipe($.if(isDev, $.sourcemaps.write('.')))
     .pipe(dest('.tmp/scripts'))
     .pipe(browserSync.reload({stream: true}));
 }
@@ -92,7 +95,7 @@ function images() {
 
 function fonts() {
   return src('src/fonts/**/*.{eot,svg,ttf,woff,woff2}')
-    .pipe($.if(dev, dest('.tmp/fonts'), dest('dist/fonts')));
+    .pipe($.if(isDev, dest('.tmp/fonts'), dest('dist/fonts')));
 }
 
 function extras() {
@@ -100,6 +103,7 @@ function extras() {
     .pipe(dest('dist'));
 }
 
+//exports
 exports.default = develop;
 exports.build = build;
 exports.serveDist = serveDist;
