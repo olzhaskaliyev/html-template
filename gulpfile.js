@@ -6,7 +6,6 @@ const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const postcssNormalize = require('postcss-normalize');
 const browserSync = require('browser-sync').create();
-
 const isDev = process.env.NODE_ENV === 'development';
 
 //scripts
@@ -24,7 +23,6 @@ const develop = series(clean, parallel(styles, scripts, fonts), function startAp
   watch('src/fonts/**/*', fonts);
   watch(['src/*.html', 'src/images/**/*', '.tmp/fonts/**/*']).on('change', browserSync.reload);
 });
-
 const build = series(
   clean,
   parallel(
@@ -34,7 +32,6 @@ const build = series(
     extras
   )
 );
-
 const serveDist = series(build, function startDistServer() {
   browserSync.init({
     notify: false,
@@ -50,7 +47,6 @@ const serveDist = series(build, function startDistServer() {
 function clean() {
   return del(['.tmp', 'dist'])
 }
-
 function concat() {
   return src('src/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'src', '.']}))
@@ -58,7 +54,6 @@ function concat() {
     .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
     .pipe(dest('dist'));
 }
-
 function styles() {
   return src('src/styles/*.scss')
     .pipe($.plumber())
@@ -76,7 +71,6 @@ function styles() {
     .pipe(dest('.tmp/styles'))
     .pipe(browserSync.reload({stream: true}));
 }
-
 function scripts() {
   return src('src/scripts/**/*.js')
     .pipe($.plumber())
@@ -86,18 +80,15 @@ function scripts() {
     .pipe(dest('.tmp/scripts'))
     .pipe(browserSync.reload({stream: true}));
 }
-
 function images() {
   return src('src/images/**/*', { since: lastRun(images) })
     .pipe($.imagemin())
     .pipe(dest('dist/images'));
 }
-
 function fonts() {
   return src('src/fonts/**/*.{eot,svg,ttf,woff,woff2}')
     .pipe($.if(isDev, dest('.tmp/fonts'), dest('dist/fonts')));
 }
-
 function extras() {
   return src(['src/*', '!src/*.html'], {dot: true})
     .pipe(dest('dist'));
