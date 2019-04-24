@@ -4,7 +4,8 @@
     "node": ">=4"
   },
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -29,20 +30,18 @@
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^3.0.1",
     "gulp-useref": "^3.0.0",
-    "yargs": "12.0.5"
+    "postcss-normalize": "^7.0.1"
   },
   "scripts": {
-    "serve:test": "cross-env NODE_ENV=test gulp serve",
-    "serve:dist": "cross-env NODE_ENV=production gulp serve",
-    "start": "gulp serve",
-    "build": "cross-env NODE_ENV=production gulp",
-    "test": "npm run serve:test",
+    "start": "cross-env NODE_ENV=development gulp",
+    "build": "cross-env NODE_ENV=production gulp build",
+    "serve:dist": "cross-env NODE_ENV=production gulp serveDist",
     "tasks": "gulp --tasks"
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions",
-    "Firefox ESR"
+    "Firefox ESR",
+    "last 2 versions"
   ],
   "eslintConfig": {
     "parserOptions": {

@@ -1,117 +1,35 @@
-// generated on 2019-04-24 using generator-webapp 4.0.0-5
 const { src, dest, watch, series, parallel, lastRun } = require('gulp');
-const gulpLoadPlugins = require('gulp-load-plugins');
-const browserSync = require('browser-sync');
+const $ = require('gulp-load-plugins')();
 const del = require('del');
-const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const { argv } = require('yargs');
+const autoprefixer = require('autoprefixer');
+const postcssNormalize = require('postcss-normalize');
+const browserSync = require('browser-sync').create();
 
-const $ = gulpLoadPlugins();
-const server = browserSync.create();
+const dev = process.env.NODE_ENV === 'development';
 
-const port = argv.port || 9000;
+const develop = series(clean, parallel(styles, scripts, fonts), function startAppServer() {
+  browserSync.init({
+    notify: false,
+    port: 9000,
+    server: {
+      baseDir: ['.tmp', 'src'],
+      routes: {
+        '/node_modules': 'node_modules'
+      }
+    }
+  });
 
-const isProd = process.env.NODE_ENV === 'production';
-const isTest = process.env.NODE_ENV === 'test';
-const isDev = !isProd && !isTest;
-
-function styles() {
-  return src('app/styles/*.scss')
-    .pipe($.plumber())
-    .pipe($.if(!isProd, $.sourcemaps.init()))
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
-    .pipe($.postcss([
-      autoprefixer()
-    ]))
-    .pipe($.if(!isProd, $.sourcemaps.write()))
-    .pipe(dest('.tmp/styles'))
-    .pipe(server.reload({stream: true}));
-};
-
-function scripts() {
-  return src('app/scripts/**/*.js')
-    .pipe($.plumber())
-    .pipe($.if(!isProd, $.sourcemaps.init()))
-    .pipe($.babel())
-    .pipe($.if(!isProd, $.sourcemaps.write('.')))
-    .pipe(dest('.tmp/scripts'))
-    .pipe(server.reload({stream: true}));
-};
-
-
-const lintBase = files => {
-  return src(files)
-    .pipe($.eslint({ fix: true }))
-    .pipe(server.reload({stream: true, once: true}))
-    .pipe($.eslint.format())
-    .pipe($.if(!server.active, $.eslint.failAfterError()));
-}
-function lint() {
-  return lintBase('app/scripts/**/*.js')
-    .pipe(dest('app/scripts'));
-};
-function lintTest() {
-  return lintBase('test/spec/**/*.js')
-    .pipe(dest('test/spec'));
-};
-
-function html() {
-  return src('app/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
-    .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
-    .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
-    .pipe($.if(/\.html$/, $.htmlmin({
-      collapseWhitespace: true,
-      minifyCSS: true,
-      minifyJS: {compress: {drop_console: true}},
-      processConditionalComments: true,
-      removeComments: true,
-      removeEmptyAttributes: true,
-      removeScriptTypeAttributes: true,
-      removeStyleLinkTypeAttributes: true
-    })))
-    .pipe(dest('dist'));
-}
-
-function images() {
-  return src('app/images/**/*', { since: lastRun(images) })
-    .pipe($.imagemin())
-    .pipe(dest('dist/images'));
-};
-
-function fonts() {
-  return src('app/fonts/**/*.{eot,svg,ttf,woff,woff2}')
-    .pipe($.if(!isProd, dest('.tmp/fonts'), dest('dist/fonts')));
-};
-
-function extras() {
-  return src([
-    'app/*',
-    '!app/*.html'
-  ], {
-    dot: true
-  }).pipe(dest('dist'));
-};
-
-function clean() {
-  return del(['.tmp', 'dist'])
-}
-
-function measureSize() {
-  return src('dist/**/*')
-    .pipe($.size({title: 'build', gzip: true}));
-}
+  watch('src/styles/**/*.scss', styles);
+  watch('src/scripts/**/*.js', scripts);
+  watch('src/fonts/**/*', fonts);
+  watch(['src/*.html', 'src/images/**/*', '.tmp/fonts/**/*']).on('change', browserSync.reload);
+});
 
 const build = series(
   clean,
   parallel(
-    lint,
-    series(parallel(styles, scripts), html),
+    series(parallel(styles, scripts), concat),
     images,
     fonts,
     extras
@@ -119,52 +37,10 @@ const build = series(
   measureSize
 );
 
-function startAppServer() {
-  server.init({
+const serveDist = series(build, function startDistServer() {
+  browserSync.init({
     notify: false,
-    port,
-    server: {
-      baseDir: ['.tmp', 'app'],
-      routes: {
-        '/node_modules': 'node_modules'
-      }
-    }
-  });
-
-  watch([
-    'app/*.html',
-    'app/images/**/*',
-    '.tmp/fonts/**/*'
-  ]).on('change', server.reload);
-
-  watch('app/styles/**/*.scss', styles);
-  watch('app/scripts/**/*.js', scripts);
-  watch('app/fonts/**/*', fonts);
-}
-
-function startTestServer() {
-  server.init({
-    notify: false,
-    port,
-    ui: false,
-    server: {
-      baseDir: 'test',
-      routes: {
-        '/scripts': '.tmp/scripts',
-        '/node_modules': 'node_modules'
-      }
-    }
-  });
-
-  watch('app/scripts/**/*.js', scripts);
-  watch(['test/spec/**/*.js', 'test/index.html']).on('change', server.reload);
-  watch('test/spec/**/*.js', lintTest);
-}
-
-function startDistServer() {
-  server.init({
-    notify: false,
-    port,
+    port: 9000,
     server: {
       baseDir: 'dist',
       routes: {
@@ -172,17 +48,76 @@ function startDistServer() {
       }
     }
   });
+});
+
+function clean() {
+  return del(['.tmp', 'dist'])
 }
 
-let serve;
-if (isDev) {
-  serve = series(clean, parallel(styles, scripts, fonts), startAppServer);
-} else if (isTest) {
-  serve = series(clean, scripts, startTestServer);
-} else if (isProd) {
-  serve = series(build, startDistServer);
+function concat() {
+  return src('src/*.html')
+    .pipe($.useref({searchPath: ['.tmp', 'src', '.']}))
+    .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
+    .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
+    .pipe(dest('dist'));
 }
 
-exports.serve = serve;
+function styles() {
+  return src('src/styles/*.scss')
+    .pipe($.plumber())
+    .pipe($.if(dev, $.sourcemaps.init()))
+    .pipe($.sass.sync({
+      outputStyle: 'expanded',
+      precision: 10,
+      includePaths: ['.']
+    }).on('error', $.sass.logError))
+    .pipe($.postcss([
+      postcssNormalize(),
+      autoprefixer()
+    ]))
+    .pipe($.if(dev, $.sourcemaps.write()))
+    .pipe(dest('.tmp/styles'))
+    .pipe(browserSync.reload({stream: true}));
+}
+
+function scripts() {
+  return src('src/scripts/**/*.js')
+    .pipe($.plumber())
+    .pipe($.if(dev, $.sourcemaps.init()))
+    .pipe($.babel())
+    .pipe($.if(dev, $.sourcemaps.write('.')))
+    .pipe(dest('.tmp/scripts'))
+    .pipe(browserSync.reload({stream: true}));
+}
+
+function images() {
+  return src('src/images/**/*', { since: lastRun(images) })
+    .pipe($.imagemin())
+    .pipe(dest('dist/images'));
+}
+
+function fonts() {
+  return src('src/fonts/**/*.{eot,svg,ttf,woff,woff2}')
+    .pipe($.if(dev, dest('.tmp/fonts'), dest('dist/fonts')));
+}
+
+function extras() {
+  return src(['src/*', '!src/*.html'], {dot: true})
+    .pipe(dest('dist'));
+}
+
+function measureSize() {
+  return src('dist/**/*')
+    .pipe($.size({title: 'build', gzip: true}));
+}
+
+exports.default = develop;
 exports.build = build;
-exports.default = build;
+exports.serveDist = serveDist;
+exports.clean = clean;
+exports.concat = concat;
+exports.styles = styles;
+exports.scripts = scripts;
+exports.images = images;
+exports.fonts = fonts;
+exports.extras = extras;
