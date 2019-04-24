@@ -8,8 +8,8 @@ const postcssNormalize = require('postcss-normalize');
 const browserSync = require('browser-sync').create();
 const isDev = process.env.NODE_ENV === 'development';
 
-//scripts
-const develop = series(clean, parallel(styles, scripts, fonts), function startAppServer() {
+//servers
+const develop = series(clean, parallel(styles, scripts, fonts), function() {
   browserSync.init({
     notify: false,
     port: 9000,
@@ -32,7 +32,7 @@ const build = series(
     extras
   )
 );
-const serveDist = series(build, function startDistServer() {
+const serveDist = series(build, function() {
   browserSync.init({
     notify: false,
     port: 9000,
@@ -53,6 +53,10 @@ function concat() {
     .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
     .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
     .pipe(dest('dist'));
+}
+function html() {
+  return src('src/*.html')
+    .pipe(dest('.tmp'));
 }
 function styles() {
   return src('src/styles/*.scss')
@@ -100,6 +104,7 @@ exports.build = build;
 exports.serveDist = serveDist;
 exports.clean = clean;
 exports.concat = concat;
+exports.html = html;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
