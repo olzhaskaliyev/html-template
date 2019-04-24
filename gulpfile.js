@@ -14,12 +14,9 @@ const develop = series(clean, parallel(styles, scripts, fonts), function startAp
     port: 9000,
     server: {
       baseDir: ['.tmp', 'src'],
-      routes: {
-        '/node_modules': 'node_modules'
-      }
+      routes: {'/node_modules': 'node_modules'}
     }
   });
-
   watch('src/styles/**/*.scss', styles);
   watch('src/scripts/**/*.js', scripts);
   watch('src/fonts/**/*', fonts);
@@ -33,8 +30,7 @@ const build = series(
     images,
     fonts,
     extras
-  ),
-  measureSize
+  )
 );
 
 const serveDist = series(build, function startDistServer() {
@@ -43,9 +39,7 @@ const serveDist = series(build, function startDistServer() {
     port: 9000,
     server: {
       baseDir: 'dist',
-      routes: {
-        '/node_modules': 'node_modules'
-      }
+      routes: {'/node_modules': 'node_modules'}
     }
   });
 });
@@ -104,11 +98,6 @@ function fonts() {
 function extras() {
   return src(['src/*', '!src/*.html'], {dot: true})
     .pipe(dest('dist'));
-}
-
-function measureSize() {
-  return src('dist/**/*')
-    .pipe($.size({title: 'build', gzip: true}));
 }
 
 exports.default = develop;
