@@ -1,11 +1,7 @@
-# dependencies
+/.idea
 node_modules
 bower_components
-
-# compiled output
-/dist
 /.tmp
-
-# System Files
+/dist
 .DS_Store
 Thumbs.db
