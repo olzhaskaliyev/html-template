@@ -9,7 +9,7 @@ const browserSync = require('browser-sync').create();
 const isDev = process.env.NODE_ENV === 'development';
 
 //servers
-const develop = series(clean, parallel(styles, scripts, fonts), function() {
+const develop = series(clean, parallel(templates, styles, scripts, fonts), function() {
   browserSync.init({
     notify: false,
     port: 9000,
@@ -18,6 +18,7 @@ const develop = series(clean, parallel(styles, scripts, fonts), function() {
       routes: {'/node_modules': 'node_modules'}
     }
   });
+  watch('src/styles/**/*.pug', templates);
   watch('src/styles/**/*.scss', styles);
   watch('src/scripts/**/*.js', scripts);
   watch('src/fonts/**/*', fonts);
@@ -26,7 +27,7 @@ const develop = series(clean, parallel(styles, scripts, fonts), function() {
 const build = series(
   clean,
   parallel(
-    series(parallel(styles, scripts), concat),
+    series(parallel(templates, styles, scripts), concat),
     images,
     fonts,
     extras
@@ -48,15 +49,18 @@ function clean() {
   return del(['.tmp', 'dist'])
 }
 function concat() {
-  return src('src/*.html')
+  return src('.tmp/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'src', '.']}))
     .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
     .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
     .pipe(dest('dist'));
 }
-function html() {
-  return src('src/*.html')
-    .pipe(dest('.tmp'));
+function templates() {
+  return src('src/*.pug')
+    .pipe($.plumber())
+    .pipe($.pug({pretty: true}))
+    .pipe(dest('.tmp'))
+    .pipe(browserSync.reload({stream: true}));
 }
 function styles() {
   return src('src/styles/*.scss')
@@ -94,17 +98,17 @@ function fonts() {
     .pipe($.if(isDev, dest('.tmp/fonts'), dest('dist/fonts')));
 }
 function extras() {
-  return src(['src/*', '!src/*.html'], {dot: true})
+  return src(['src/*', '!src/*.html', '!src/*.pug'], {dot: true})
     .pipe(dest('dist'));
 }
 
 //exports
+exports.clean = clean;
 exports.default = develop;
 exports.build = build;
 exports.serveDist = serveDist;
-exports.clean = clean;
-exports.concat = concat;
-exports.html = html;
+exports.concat = series(parallel(templates, styles, scripts), concat);
+exports.templates = templates;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
