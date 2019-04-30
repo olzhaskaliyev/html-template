@@ -1,0 +1,12 @@
+/*Layout*/
+
+/*Base*/
+body {
+  min-height: 100vh;
+  background: $light;
+  color: $regular-text-color;
+  font-family: $regular-font;
+  font-size: $regular-font-size;
+  line-height: $regular-line;
+  -webkit-font-smoothing: subpixel-antialiased;
+}

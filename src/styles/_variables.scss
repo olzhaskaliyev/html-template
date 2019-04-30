@@ -1,0 +1,49 @@
+//Colors
+$black: rgb(0, 0, 0);
+$black-80: rgba(0, 0, 0, .8);
+$black-40: rgba(0, 0, 0, .4);
+$black-20: rgba(0, 0, 0, .2);
+$black-10: rgba(0, 0, 0, .1);
+$white: rgb(255, 255, 255);
+$white-80: rgba(255, 255, 255, .8);
+$white-40: rgba(255, 255, 255, .4);
+$white-20: rgba(255, 255, 255, .2);
+$white-10: rgba(255, 255, 255, .1);
+
+$divide: $black-10;
+$divide-light: $white-10;
+
+$dark: $black-80;
+$grey: $black-40;
+$light-grey: $black-20;
+$light: #f2f2f2;
+$light-darker: #e6e6e6;
+
+$brand-color: rgb(208, 2, 27);
+$brand-color-lighter: rgb(217, 52, 73);
+$brand-color-darker: rgb(186, 2, 24);
+
+$red: rgb(246, 71, 71);
+$blue: rgb(52, 152, 219);
+$blue-lighter: rgb(91, 172, 226);
+$blue-darker: rgb(46, 136, 196);
+$green: rgb(98, 180, 53);
+$green-darker: rgb(52, 128, 10);
+$yellow: rgb(255, 197, 4);
+$orange: rgb(245, 166, 35);
+$purple: rgb(130, 77, 178);
+$pink: rgb(235, 144, 155);
+
+//Fonts
+$regular-text-color: $dark;
+$secondary-text-color: $grey;
+$regular-font: sans-serif;
+$header-font: sans-serif;
+$regular-font-size: .875rem;
+$regular-line: 1rem;
+
+//Screens
+$tablet: 744px;
+$tablet-album: 984px;
+$desktop: 1080px;
+$aside-shown: 1366px;

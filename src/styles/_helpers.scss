@@ -1,0 +1,114 @@
+/*Helpers*/
+
+.flex {
+  display: flex;
+  &.direction-column {
+    flex-direction: column;
+  }
+  &.align-center {
+    align-items: center;
+  }
+  &.justify-center {
+    justify-content: center;
+  }
+}
+
+.flex-grow {
+  flex: 1 0 0;
+}
+
+.flex-right {
+  margin-left: auto;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.adaptive-margin {
+  margin-bottom: 1rem;
+  @media (min-width: $tablet) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.dark-text {
+  color: $dark;
+}
+
+.grey-text {
+  color: $grey;
+}
+
+.light-text {
+  color: $light-grey;
+}
+
+.white-text {
+  color: $white;
+}
+
+.red-text {
+  color: $red;
+}
+
+.blue-text {
+  color: $blue;
+}
+
+.green-text {
+  color: $green;
+}
+
+.red-background {
+  background-color: $red;
+  color: $white;
+}
+
+.blue-background {
+  background-color: $blue;
+  color: $white;
+}
+
+.green-background {
+  background-color: $green;
+  color: $white;
+}
+
+.dark-background {
+  background-color: $dark;
+  color: $white;
+}
+
+.grey-background {
+  background-color: $grey;
+  color: $white;
+}
+
+.light-background {
+  background-color: $light;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

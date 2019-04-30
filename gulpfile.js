@@ -4,12 +4,11 @@ const $ = require('gulp-load-plugins')();
 const del = require('del');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
-const postcssNormalize = require('postcss-normalize');
 const browserSync = require('browser-sync').create();
 const isDev = process.env.NODE_ENV === 'development';
 
 //servers
-const develop = series(clean, parallel(templates, styles, scripts, fonts), function() {
+const develop = series(clean, parallel(templatesCached, styles, scripts), function() {
   browserSync.init({
     notify: false,
     port: 9000,
@@ -18,16 +17,16 @@ const develop = series(clean, parallel(templates, styles, scripts, fonts), funct
       routes: {'/node_modules': 'node_modules'}
     }
   });
-  watch('src/styles/**/*.pug', templates);
+  watch('src/*.pug', templatesCached);
+  watch('src/templates/**/*.pug', templates);
   watch('src/styles/**/*.scss', styles);
   watch('src/scripts/**/*.js', scripts);
-  watch('src/fonts/**/*', fonts);
-  watch(['src/*.html', 'src/images/**/*', '.tmp/fonts/**/*']).on('change', browserSync.reload);
+  watch(['src/*.html', 'src/img/**/*', 'src/fonts/**/*']).on('change', browserSync.reload);
 });
 const build = series(
   clean,
   parallel(
-    series(parallel(templates, styles, scripts), concat),
+    series(parallel(html, templates, styles, scripts), concat),
     images,
     fonts,
     extras
@@ -45,18 +44,27 @@ const serveDist = series(build, function() {
 });
 
 //tasks
-function clean() {
-  return del(['.tmp', 'dist'])
-}
 function concat() {
   return src('.tmp/*.html')
-    .pipe($.useref({searchPath: ['.tmp', 'src', '.']}))
-    .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
+    .pipe($.useref({searchPath: ['.tmp', '.']}))
     .pipe($.if(/\.css$/, $.postcss([cssnano({safe: true, autoprefixer: false})])))
+    .pipe($.if(/\.js$/, $.uglify({compress: {drop_console: true}})))
+    // .pipe($.if(/\.css$/, dest('dist')))
+    // .pipe($.if(/\.js$/, dest('dist')))
     .pipe(dest('dist'));
+}
+function html() {
+  return src('src/*.html')
+    .pipe(dest('.tmp'));
 }
 function templates() {
   return src('src/*.pug')
+    .pipe($.plumber())
+    .pipe($.pug({pretty: true}))
+    .pipe(dest('.tmp'));
+}
+function templatesCached() {
+  return src('src/*.pug', { since: lastRun(templatesCached) })
     .pipe($.plumber())
     .pipe($.pug({pretty: true}))
     .pipe(dest('.tmp'))
@@ -71,10 +79,7 @@ function styles() {
       precision: 10,
       includePaths: ['.']
     }).on('error', $.sass.logError))
-    .pipe($.postcss([
-      postcssNormalize(),
-      autoprefixer()
-    ]))
+    .pipe($.postcss([autoprefixer()]))
     .pipe($.if(isDev, $.sourcemaps.write()))
     .pipe(dest('.tmp/styles'))
     .pipe(browserSync.reload({stream: true}));
@@ -83,7 +88,7 @@ function scripts() {
   return src('src/scripts/**/*.js')
     .pipe($.plumber())
     .pipe($.if(isDev, $.sourcemaps.init()))
-    .pipe($.babel())
+    .pipe($.if('main.js', $.babel()))
     .pipe($.if(isDev, $.sourcemaps.write('.')))
     .pipe(dest('.tmp/scripts'))
     .pipe(browserSync.reload({stream: true}));
@@ -94,23 +99,27 @@ function images() {
     .pipe(dest('dist/images'));
 }
 function fonts() {
-  return src('src/fonts/**/*.{eot,svg,ttf,woff,woff2}')
+  return src('src/fonts/**/*')
     .pipe($.if(isDev, dest('.tmp/fonts'), dest('dist/fonts')));
 }
 function extras() {
   return src(['src/*', '!src/*.html', '!src/*.pug'], {dot: true})
     .pipe(dest('dist'));
 }
+function clean() {
+  return del(['.tmp', 'dist'])
+}
 
 //exports
-exports.clean = clean;
 exports.default = develop;
 exports.build = build;
 exports.serveDist = serveDist;
-exports.concat = series(parallel(templates, styles, scripts), concat);
+exports.concat = series(parallel(html, templates, styles, scripts), concat);
+exports.html = html;
 exports.templates = templates;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.images = images;
 exports.fonts = fonts;
 exports.extras = extras;
+exports.clean = clean;

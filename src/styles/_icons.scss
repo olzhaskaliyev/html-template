@@ -1,0 +1,247 @@
+/*Icons*/
+
+@font-face {
+  font-family: 'Font Icons';
+  src: url('../fonts/font-icons.woff2') format('woff2'),
+  url('../fonts/font-icons.woff') format('woff'),
+  url('../fonts/font-icons.ttf') format('truetype');
+}
+
+.icon {
+  padding-left: 1.5rem;
+  min-height: 1rem;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1rem;
+    height: 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    font-family: "Font Icons", sans-serif;
+    font-size: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-decoration: none;
+    text-transform: none;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  &.icon-with-img {
+    img.icon-img {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: 1rem;
+      max-height: 1rem;
+    }
+  }
+  &.right {
+    display: inline-block;
+    padding-left: 0;
+    padding-right: 1.5rem;
+    &:before {
+      left: auto;
+      right: 0;
+    }
+  }
+  &.circle {
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+    &:before {
+      position: static;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      align-self: flex-start;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      border-radius: 50%;
+      background-color: $light;
+      background-size: 1rem;
+      background-position: center;
+    }
+    &.small {
+      &:before {
+        margin-right: .75rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+      }
+    }
+    &.right {
+      padding-right: 0;
+      &:before {
+        order: 2;
+        margin-right: 0;
+        margin-left: 1rem;
+      }
+    }
+  }
+  @at-root i#{&} {
+    padding-left: 1rem;
+    &.circle:before {
+      margin-right: 0;
+    }
+    &.small-rounded {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      padding-left: 1.5rem;
+      border-radius: 50%;
+      &:before {
+        width: .75rem;
+        height: .75rem;
+        top: .375rem;
+        left: .375rem;
+        font-size: .75rem;
+        line-height: .75rem;
+      }
+    }
+  }
+  &.capsule {
+    min-width: 3.25rem;
+    min-height: 2rem;
+    padding: .5rem;
+    padding-left: 1.75rem;
+    border-radius: 1rem;
+    background-color: $light;
+    text-align: center;
+    &:before {
+      top: .5rem;
+      left: .5rem;
+    }
+    &.right {
+      padding-left: .5rem;
+      padding-right: 1.75rem;
+      &:before {
+        left: auto;
+        right: .5rem;
+      }
+    }
+  }
+  &.button {
+    padding-left: 2rem;
+    &:before {
+      top: 50%;
+      transform: translateY(-50%);
+      left: .5rem;
+    }
+    &.small {
+      padding-left: 1.5rem;
+      &:before {
+        left: .25rem;
+      }
+    }
+    &.big {
+      padding-left: 2.25rem;
+      &:before {
+        left: .75rem;
+      }
+    }
+    &.right {
+      padding-left: 1rem;
+      padding-right: 2rem;
+      &:before {
+        left: auto;
+        right: .5rem;
+      }
+    }
+    &:not(.ghost):before {
+      color: #fff;
+    }
+  }
+
+  /*icon-font*/
+  &.icon-facebook:before { content: '\e800'; }
+  &.icon-android:before { content: '\e801'; }
+  &.icon-apple:before { content: '\e802'; }
+  &.icon-arrow-down:before { content: '\e803'; }
+  &.icon-arrow-right:before { content: '\e804'; }
+  &.icon-check:before { content: '\e805'; }
+  &.icon-close:before { content: '\e806'; }
+  &.icon-comments:before { content: '\e807'; }
+  &.icon-complaint:before { content: '\e808'; }
+  &.icon-twitter:before { content: '\e809'; }
+  &.icon-finger-right:before { content: '\e80a'; }
+  &.icon-football:before { content: '\e80b'; }
+  &.icon-instagram:before { content: '\e80c'; }
+  &.icon-odd-font:before { content: '\e80d'; }
+  &.icon-hockey:before { content: '\e80e'; }
+  &.icon-image:before { content: '\e80f'; }
+  &.icon-link:before { content: '\e810'; }
+  &.icon-list:before { content: '\e811'; }
+  &.icon-live-font:before { content: '\e812'; }
+  &.icon-minus:before { content: '\e813'; }
+  &.icon-mobile:before { content: '\e814'; }
+  &.icon-money:before { content: '\e815'; }
+  &.icon-news:before { content: '\e816'; }
+  &.icon-notice:before { content: '\e817'; }
+  &.icon-trend-font:before { content: '\e818'; }
+  &.icon-plus-square:before { content: '\e819'; }
+  &.icon-plus:before { content: '\e81a'; }
+  &.icon-reply:before { content: '\e81b'; }
+  &.icon-review:before { content: '\e81c'; }
+  &.icon-burger:before { content: '\e81d'; }
+  &.icon-search:before { content: '\e81e'; }
+  &.icon-send:before { content: '\e81f'; }
+  &.icon-smile:before { content: '\e820'; }
+  &.icon-star:before { content: '\e821'; }
+  &.icon-support:before { content: '\e822'; }
+  &.icon-tennis:before { content: '\e823'; }
+  &.icon-thumbs-down:before { content: '\e824'; }
+  &.icon-thumbs-up:before { content: '\e825'; }
+  &.icon-time:before { content: '\e826'; }
+  &.icon-vk:before { content: '\e827'; }
+  &.icon-youtube:before { content: '\e828'; }
+  &.icon-google-plus:before { content: '\e829'; }
+  &.icon-telegram:before { content: '\e81f'; }
+  &.icon-tv:before { content: '\e82a'; }
+  &.icon-user:before { content: '\e82b'; }
+  &.icon-views:before { content: '\e82c'; }
+  &.icon-volleyball:before { content: '\e82d'; }
+  &.icon-wait:before { content: '\e82e'; }
+  &.icon-bell:before { content: '\e82f'; }
+  &.icon-block:before { content: '\e830'; }
+  &.icon-info:before { content: '\e831'; }
+  &.icon-alert:before { content: '\e832'; }
+  &.icon-calendar:before { content: '\e833'; }
+  &.icon-email:before { content: '\e834'; }
+  &.icon-mobile-o:before { content: '\e835'; }
+  &.icon-phone:before { content: '\e836'; }
+  &.icon-pencil:before { content: '\e837'; }
+  &.icon-hammer:before { content: '\e838'; }
+  &.icon-pingpong:before { content: '\e839'; }
+  &.icon-trash:before { content: '\e83a'; }
+  &.icon-basketball:before { content: '\e83b'; }
+  &.icon-more:before { content: '\e83c'; }
+  &.icon-lock:before { content: '\e83d'; }
+  &.icon-heart:before { content: '\e83e'; }
+  &.icon-pin:before { content: '\e83f'; }
+  &.icon-save:before { content: '\e840'; }
+  &.icon-arrow-down-long:before { content: '\e841'; }
+  &.icon-question:before { content: '\e842'; }
+  &.icon-views-close:before { content: '\e843'; }
+  &.icon-stop:before { content: '\e844'; }
+  &.icon-play:before { content: '\e845'; }
+  &.icon-copy:before { content: '\e846'; }
+  &.icon-infinity:before { content: '\e847'; }
+  &.icon-sort:before { content: '\e848'; }
+  &.icon-settings:before { content: '\e849'; }
+  &.icon-map-marker:before { content: '\e84a'; }
+  &.icon-frame:before { content: '\e84b'; }
+  &.icon-question-circle:before { content: '\e84c'; }
+  &.icon-arrow-right-long:before { content: '\e84d'; }
+  &.icon-out:before { content: '\e84e'; }
+  &.icon-equal:before { content: '\e84f'; }
+}
