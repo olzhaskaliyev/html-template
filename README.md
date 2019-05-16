@@ -42,7 +42,7 @@ Multipage web app template with Gulp 4, Pug, SASS, PostCSS, Autoprefixer, Babel,
 - `dist/` - project's built distribute (production)
 
 ## Intalling libraries
-By default template have only 1 library for production [Normalize.css](http://necolas.github.io/normalize.css/) (styles normalizer), to add a libraries use:  
+By default template have only 1 library for production [Normalize.css](http://necolas.github.io/normalize.css/) (styles normalizer), to add libraries use:  
 - `npm install --save *library-name*` for production
 - `npm install --save-dev *library-name*` for development
 
