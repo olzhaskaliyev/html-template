@@ -1,5 +1,9 @@
 /*Resets*/
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 /*Typography*/
 h1, h2, h3, h4, h5, h6, p,
 .heading-1, .heading-2, .heading-3,
