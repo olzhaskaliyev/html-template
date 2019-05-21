@@ -1,10 +1,10 @@
 //Colors
-$black: rgb(0, 0, 0);
-$black-80: rgba(0, 0, 0, .8);
-$black-40: rgba(0, 0, 0, .4);
-$black-20: rgba(0, 0, 0, .2);
+$black: #000;
+$black-80: #333;
+$black-40: #999;
+$black-20: #ccc;
 $black-10: rgba(0, 0, 0, .1);
-$white: rgb(255, 255, 255);
+$white: #fff;
 $white-80: rgba(255, 255, 255, .8);
 $white-40: rgba(255, 255, 255, .4);
 $white-20: rgba(255, 255, 255, .2);
@@ -16,23 +16,25 @@ $divide-light: $white-10;
 $dark: $black-80;
 $grey: $black-40;
 $light-grey: $black-20;
-$light: #f2f2f2;
-$light-darker: #e6e6e6;
+$light: hsl(0, 0%, 95%);
+$light-darker: hsl(0, 0%, 90%);
 
-$brand-color: rgb(208, 2, 27);
-$brand-color-lighter: rgb(217, 52, 73);
-$brand-color-darker: rgb(186, 2, 24);
+$brand-color: hsl(345, 100%, 50%);
+$brand-color-lighter: hsl(345, 100%, 55%);
+$brand-color-darker: hsl(345, 100%, 45%);
 
-$red: rgb(246, 71, 71);
-$blue: rgb(52, 152, 219);
-$blue-lighter: rgb(91, 172, 226);
-$blue-darker: rgb(46, 136, 196);
-$green: rgb(98, 180, 53);
-$green-darker: rgb(52, 128, 10);
-$yellow: rgb(255, 197, 4);
-$orange: rgb(245, 166, 35);
-$purple: rgb(130, 77, 178);
-$pink: rgb(235, 144, 155);
+$red: hsl(345, 100%, 50%);
+$red-lighter: hsl(345, 100%, 55%);
+$red-darker: hsl(345, 100%, 45%);
+$blue: hsl(210, 100%, 50%);
+$blue-lighter: hsl(210, 100%, 55%);
+$blue-darker: hsl(210, 100%, 45%);
+$green: hsl(150, 100%, 50%);
+$green-lighter: hsl(150, 100%, 60%);
+$green-darker: hsl(150, 100%, 45%);
+$yellow: hsl(30, 100%, 50%);
+$yellow-lighter: hsl(30, 100%, 55%);
+$yellow-darker: hsl(30, 100%, 45%);
 
 //Fonts
 $regular-text-color: $dark;
