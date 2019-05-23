@@ -23,6 +23,7 @@ const develop = series(clean, parallel(templatesCached, styles, scripts), functi
   watch('src/scripts/**/*.js', scripts);
   watch(['src/*.html', 'src/img/**/*', 'src/fonts/**/*']).on('change', browserSync.reload);
 });
+
 const build = series(
   clean,
   parallel(
@@ -32,6 +33,7 @@ const build = series(
     extras
   )
 );
+
 const serveDist = series(build, function() {
   browserSync.init({
     notify: false,
@@ -53,16 +55,19 @@ function concat() {
     // .pipe($.if(/\.js$/, dest('dist')))
     .pipe(dest('dist'));
 }
+
 function html() {
   return src('src/*.html')
     .pipe(dest('.tmp'));
 }
+
 function templates() {
   return src('src/*.pug')
     .pipe($.plumber())
     .pipe($.pug({pretty: true}))
     .pipe(dest('.tmp'));
 }
+
 function templatesCached() {
   return src('src/*.pug', { since: lastRun(templatesCached) })
     .pipe($.plumber())
@@ -70,6 +75,7 @@ function templatesCached() {
     .pipe(dest('.tmp'))
     .pipe(browserSync.reload({stream: true}));
 }
+
 function styles() {
   return src('src/styles/*.scss')
     .pipe($.plumber())
@@ -84,6 +90,7 @@ function styles() {
     .pipe(dest('.tmp/styles'))
     .pipe(browserSync.reload({stream: true}));
 }
+
 function scripts() {
   return src('src/scripts/**/*.js')
     .pipe($.plumber())
@@ -93,19 +100,23 @@ function scripts() {
     .pipe(dest('.tmp/scripts'))
     .pipe(browserSync.reload({stream: true}));
 }
+
 function images() {
   return src('src/images/**/*', { since: lastRun(images) })
     .pipe($.imagemin())
     .pipe(dest('dist/images'));
 }
+
 function fonts() {
   return src('src/fonts/**/*')
     .pipe($.if(isDev, dest('.tmp/fonts'), dest('dist/fonts')));
 }
+
 function extras() {
   return src(['src/*', '!src/*.html', '!src/*.pug'], {dot: true})
     .pipe(dest('dist'));
 }
+
 function clean() {
   return del(['.tmp', 'dist'])
 }
