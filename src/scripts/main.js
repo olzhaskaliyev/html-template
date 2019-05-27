@@ -3,7 +3,9 @@ $(document).ready(function() {
   /*Libraries*/
   $('.slick-slider').slick({
     autoplay: true,
-    dots: true
+    dots: true,
+    swipeToSlide: true,
+    mobileFirst: true
   });
 
   /*Main*/

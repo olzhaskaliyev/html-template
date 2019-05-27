@@ -1,4 +1,4 @@
-//inits
+//Inits
 const { src, dest, watch, series, parallel, lastRun } = require('gulp');
 const $ = require('gulp-load-plugins')();
 const del = require('del');
@@ -7,7 +7,7 @@ const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync').create();
 const isDev = process.env.NODE_ENV === 'development';
 
-//servers
+//Servers
 const develop = series(clean, parallel(templatesCached, styles, scripts), function() {
   browserSync.init({
     notify: false,
@@ -45,7 +45,7 @@ const serveDist = series(build, function() {
   });
 });
 
-//tasks
+//Tasks
 function concat() {
   return src('.tmp/*.html')
     .pipe($.useref({searchPath: ['.tmp', '.']}))
@@ -121,7 +121,7 @@ function clean() {
   return del(['.tmp', 'dist'])
 }
 
-//exports
+//Exports
 exports.default = develop;
 exports.build = build;
 exports.serveDist = serveDist;
