@@ -1,10 +1,12 @@
 //Inits
 const { src, dest, watch, series, parallel, lastRun } = require('gulp');
-const $ = require('gulp-load-plugins')();
+const gulpLoadPlugins = require('gulp-load-plugins');
+const $ = gulpLoadPlugins();
 const del = require('del');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
-const browserSync = require('browser-sync').create();
+const browserSyncDep = require('browser-sync');
+const browserSync = browserSyncDep.create();
 const isDev = process.env.NODE_ENV === 'development';
 
 //Servers
@@ -21,7 +23,7 @@ const develop = series(clean, parallel(templatesCached, styles, scripts), functi
   watch('src/templates/**/*.pug', templates);
   watch('src/styles/**/*.scss', styles);
   watch('src/scripts/**/*.js', scripts);
-  watch(['src/*.html', 'src/img/**/*', 'src/fonts/**/*']).on('change', browserSync.reload);
+  watch(['src/*.html', 'src/images/**/*', 'src/fonts/**/*']).on('change', browserSync.reload);
 });
 
 const build = series(
