@@ -9,7 +9,6 @@ h1, h2, h3, h4, h5, h6, p,
 .heading-1, .heading-2, .heading-3,
 .heading-4, .heading-5, .heading-6,
 .paragraph {
-  display: block;
   margin-top: 0;
   margin-bottom: 1rem;
   &:last-child {
@@ -54,6 +53,7 @@ a {
   transition: color .2s, background-color .2s, border-color .2s, box-shadow .2s;
   &:hover {
     color: $brand-color;
+    text-decoration: none;
   }
 }
 

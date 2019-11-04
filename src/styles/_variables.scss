@@ -1,8 +1,12 @@
 //Colors
+$brand-color: hsl(345, 100%, 50%);
+$brand-color-lighter: hsl(345, 100%, 55%);
+$brand-color-darker: hsl(345, 100%, 45%);
+
 $black: #000;
-$black-80: #333;
-$black-40: #999;
-$black-20: #ccc;
+$black-80: rgba(0, 0, 0, .8);
+$black-40: rgba(0, 0, 0, .4);
+$black-20: rgba(0, 0, 0, .2);
 $black-10: rgba(0, 0, 0, .1);
 $white: #fff;
 $white-80: rgba(255, 255, 255, .8);
@@ -10,18 +14,15 @@ $white-40: rgba(255, 255, 255, .4);
 $white-20: rgba(255, 255, 255, .2);
 $white-10: rgba(255, 255, 255, .1);
 
-$divide: $black-10;
-$divide-light: $white-10;
-
 $dark: $black-80;
 $grey: $black-40;
-$light-grey: $black-20;
+$grey-light: $black-20;
+$light-grey: $white-20;
 $light: hsl(0, 0%, 95%);
 $light-darker: hsl(0, 0%, 90%);
 
-$brand-color: hsl(345, 100%, 50%);
-$brand-color-lighter: hsl(345, 100%, 55%);
-$brand-color-darker: hsl(345, 100%, 45%);
+$divide: $black-10;
+$divide-light: $white-10;
 
 $red: hsl(345, 100%, 50%);
 $red-lighter: hsl(345, 100%, 55%);
@@ -39,13 +40,13 @@ $yellow-darker: hsl(30, 100%, 45%);
 //Fonts
 $regular-text-color: $dark;
 $secondary-text-color: $grey;
-$regular-font: sans-serif;
-$header-font: sans-serif;
+$regular-font: "Open Sans", sans-serif;
+$header-font: "Merriweather", serif;
+$display-font: "Press Start 2P", cursive;
 $regular-font-size: .875rem;
-$regular-line: 1.125rem;
+$regular-line: 1rem;
 
 //Screens
-$tablet: 744px;
-$tablet-album: 984px;
-$desktop: 1080px;
-$aside-shown: 1366px;
+$tablet: 720px;
+$tablet-album: 960px;
+$desktop: 1024px;

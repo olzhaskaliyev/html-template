@@ -1,53 +1,59 @@
-//Inits
-const { src, dest, watch, series, parallel, lastRun } = require('gulp');
-const gulpLoadPlugins = require('gulp-load-plugins');
-const $ = gulpLoadPlugins();
+const {src, dest, watch, series, parallel, lastRun} = require('gulp');
+const $ = require('gulp-load-plugins')();
 const del = require('del');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
-const browserSyncDep = require('browser-sync');
-const browserSync = browserSyncDep.create();
-const isDev = process.env.NODE_ENV === 'development';
+const browserSync = require('browser-sync').create();
 
-//Servers
-const develop = series(clean, parallel(templatesCached, styles, scripts), function() {
-  browserSync.init({
-    notify: false,
-    port: 9000,
-    server: {
-      baseDir: ['.tmp', 'src'],
-      routes: {'/node_modules': 'node_modules'}
-    }
-  });
-  watch('src/*.pug', templatesCached);
-  watch('src/templates/**/*.pug', templates);
-  watch('src/styles/**/*.scss', styles);
-  watch('src/scripts/**/*.js', scripts);
-  watch(['src/*.html', 'src/images/**/*', 'src/fonts/**/*']).on('change', browserSync.reload);
-});
+let isDev = process.env.NODE_ENV === 'development';
+
+const develop = series(
+  clean,
+  parallel(templatesCached, styles, scripts),
+  function serveDevelopment() {
+    browserSync.init({
+      notify: false,
+      port: 9000,
+      server: {
+        baseDir: ['.tmp', 'src'],
+        routes: {'/node_modules': 'node_modules'}
+      }
+    });
+    watch('src/*.pug', templatesCached);
+    watch('src/templates/**/*.pug', templates);
+    watch('src/styles/**/*.scss', styles);
+    watch('src/scripts/**/*.js', scripts);
+    watch(['src/*.html', 'src/images/**/*', 'src/fonts/**/*'])
+      .on('change', browserSync.reload);
+  }
+);
 
 const build = series(
   clean,
   parallel(
-    series(parallel(html, templates, styles, scripts), concat),
+    series(
+      parallel(html, templates, styles, scripts),
+      concat),
     images,
     fonts,
     extras
   )
 );
 
-const serveDist = series(build, function() {
-  browserSync.init({
-    notify: false,
-    port: 9000,
-    server: {
-      baseDir: 'dist',
-      routes: {'/node_modules': 'node_modules'}
-    }
-  });
-});
+const serveDist = series(
+  build,
+  function serveProduction() {
+    browserSync.init({
+      notify: false,
+      port: 9000,
+      server: {
+        baseDir: 'dist',
+        routes: {'/node_modules': 'node_modules'}
+      }
+    });
+  }
+);
 
-//Tasks
 function concat() {
   return src('.tmp/*.html')
     .pipe($.useref({searchPath: ['.tmp', '.']}))
@@ -71,7 +77,7 @@ function templates() {
 }
 
 function templatesCached() {
-  return src('src/*.pug', { since: lastRun(templatesCached) })
+  return src('src/*.pug', {since: lastRun(templatesCached)})
     .pipe($.plumber())
     .pipe($.pug({pretty: true}))
     .pipe(dest('.tmp'))
@@ -104,7 +110,7 @@ function scripts() {
 }
 
 function images() {
-  return src('src/images/**/*', { since: lastRun(images) })
+  return src('src/images/**/*', {since: lastRun(images)})
     .pipe($.imagemin())
     .pipe(dest('dist/images'));
 }
@@ -123,7 +129,6 @@ function clean() {
   return del(['.tmp', 'dist'])
 }
 
-//Exports
 exports.default = develop;
 exports.build = build;
 exports.serveDist = serveDist;

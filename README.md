@@ -63,11 +63,3 @@ script(src='/node_modules/jquery/dist/jquery.js')
 script(src='/node_modules/slick-carousel/slick/slick.js')
 // endbuild
 ```
-
-## To Do
-- [x] Write README
-- [ ] Clean some trash
-- [ ] Move tasks scripts from package.json and leave only gulpfile tasks
-- [ ] Add autowiring depencies task
-- [ ] ...
-- [ ] Profit!

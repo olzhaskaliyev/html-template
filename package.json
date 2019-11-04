@@ -4,16 +4,17 @@
     "node": ">=4"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
-    "normalize.css": "^8.0.1",
+    "popper.js": "^1.16.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "autoprefixer": "^9.6.1",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "autoprefixer": "^9.7.1",
     "browser-sync": "^2.26.7",
-    "cross-env": "^5.2.1",
+    "cross-env": "^6.0.3",
     "cssnano": "^4.1.10",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
@@ -22,7 +23,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-filter": "^6.0.0",
     "gulp-if": "^3.0.0",
-    "gulp-imagemin": "^6.1.0",
+    "gulp-imagemin": "^6.1.1",
     "gulp-load-plugins": "^2.0.1",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
@@ -31,7 +32,7 @@
     "gulp-size": "^3.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "gulp-useref": "^3.1.6"
+    "gulp-useref": "^4.0.0"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development gulp",
@@ -41,8 +42,8 @@
   },
   "browserslist": [
     "> 1%",
-    "Firefox ESR",
-    "last 2 versions"
+    "last 2 versions",
+    "Firefox ESR"
   ],
   "eslintConfig": {
     "parserOptions": {
