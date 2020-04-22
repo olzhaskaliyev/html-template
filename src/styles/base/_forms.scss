@@ -1,4 +1,4 @@
-/*Forms*/
+/* Forms */
 
 input[type="text"],
 input[type="search"],
@@ -285,6 +285,9 @@ input[type="color"] {
   }
   &.large {
     padding: .75rem 1.25rem;
+    &.rounded {
+      border-radius: 1.25rem;
+    }
   }
   &.rounded {
     border-radius: 1rem;

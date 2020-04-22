@@ -1,20 +1,20 @@
 /* Base */
-@import "variables";
-@import "fonts";
-@import "resets";
-@import "forms";
+@import "base/variables";
+@import "base/fonts";
+@import "base/resets";
+@import "base/forms";
 
 /* Components */
-@import "libraries";
-@import "grid";
-@import "components";
-@import "content";
-@import "helpers";
+@import "components/libraries";
+@import "components/grid";
+@import "components/components";
+@import "components/content";
+@import "components/helpers";
 
 /* Layout */
-@import "layout";
-@import "header";
-@import "footer";
+@import "layout/layout";
+@import "layout/header";
+@import "layout/footer";
 
 /* Modules */
-@import "index";
+@import "pages/index";

@@ -1,8 +1,0 @@
-mixin tabs(activeCaption, captionsArray, classOptional, isWithCounter)
-  .tabs(class=classOptional)
-    a.active(href='')= activeCaption
-    if captionsArray
-      each caption in captionsArray
-        a(href='')= caption
-          if isWithCounter
-            sup 124

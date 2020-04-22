@@ -1,18 +1,18 @@
 extends templates/layout
 block content
 
-  .slick-slider
-    - for (i = 0; i < 3; i++)
-      .slide.py-4
-        .container
-          h1.heading-1 HTML Template
-          p.paragraph Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti facere impedit minus mollitia tenetur. A aliquam aspernatur assumenda deserunt, dolore eius eveniet, id illo inventore pariatur quibusdam quo ratione repellendus, sint unde ut veritatis voluptatibus? A culpa cupiditate debitis dicta est fugit ipsam laudantium magnam, maxime obcaecati pariatur perferendis quis quos tempore tenetur veniam voluptate voluptatibus voluptatum. Consequatur exercitationem iste sed temporibus. Quasi, sequi.
-          p: b: a(href='').link Olzhas.Kaliyev.90@Gmail.com
-
   section.section
     .container
-      h1.heading-2 Catalog
+      h1.heading-2 Home
+
       .row
-        - for (i = 0; i < 6; i++)
-          .col-lg-4
-            include templates/views/article-card
+        - for (i = 0; i < 5; i++)
+          if (i === 0)
+            .col-sm-8
+              include templates/views/article-card
+          else
+            .col-sm-4
+              include templates/views/article-card
+
+      .flex.justify-center
+        a(href='category.html').button.ghost.rounded.large More

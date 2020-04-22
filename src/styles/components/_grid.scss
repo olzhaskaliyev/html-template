@@ -1,4 +1,4 @@
-/*Grid*/
+/* Grid */
 
 .container {
   margin-left: auto;
@@ -76,7 +76,7 @@
   }
 }
 
-/*Mobile*/
+/* Mobile */
 .col-sm-3 { flex-basis: 25%; max-width: 25%; }
 .col-sm-4 { flex-basis: 33.33333333%; max-width: 33.33333333%; }
 .col-sm-6 { flex-basis: 50%; max-width: 50%; }
@@ -88,7 +88,7 @@
 .col-sm-right { margin-left: auto; }
 .sm-hide { display: none !important; }
 
-/*Tablet*/
+/* Tablet */
 @media (min-width: $tablet) {
   .col-md-1 { flex-basis: 8.33333333%; max-width: 8.33333333%; }
   .col-md-2 { flex-basis: 16.66666667%; max-width: 16.66666667%; }
@@ -113,7 +113,7 @@
   .md-show-inline { display: inline !important; }
 }
 
-/*Tablet (album)*/
+/* Tablet (album) */
 @media (min-width: $tablet-album) {
   .col-lg-1 { flex-basis: 8.33333333%; max-width: 8.33333333%; }
   .col-lg-2 { flex-basis: 16.66666667%; max-width: 16.66666667%; }

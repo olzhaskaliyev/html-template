@@ -1,0 +1,11 @@
+extends templates/layout
+block content
+
+  section.section
+    .container
+      h1.heading-2 Category
+
+      .row
+        - for (i = 0; i < 6; i++)
+          .col-lg-4
+            include templates/views/article-card

@@ -4,12 +4,12 @@
 .section {
   @media (min-width: $tablet) {
     padding-top: 2rem;
-    padding-bottom: .5rem;
-    border-top: solid 1px $divide;
+    padding-bottom: 2rem;
+    border-bottom: solid 1px $divide;
   }
-  &:first-of-type {
+  &:last-of-type {
     @media (min-width: $tablet) {
-      margin-top: .5rem;
+      border-bottom: none;
     }
   }
   &.borderless {
@@ -79,6 +79,6 @@ a.block, .block.clickable, a.block-section {
   cursor: pointer;
   transition: box-shadow .2s;
   &:hover {
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
 }
