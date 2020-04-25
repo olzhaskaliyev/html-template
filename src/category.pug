@@ -11,7 +11,7 @@ block content
 
       .row
         .col-md-3
-          .card
+          .card.sticky-top(style='top: 72px;')
             .list-group.list-group-flush
               .list-group-item.bg-light: .h5.mb-0 Filters
 
@@ -63,11 +63,11 @@ block content
               button.btn.btn-secondary by price
 
           .row
-            - for (i = 0; i < 9; i++)
+            - for (i = 0; i < 15; i++)
               .col-lg-4
                 include templates/views/card
 
-          .pagination
+          .pagination.justify-content-center
             .page-item.disabled.active
               a(href='#').page-link Begin
             .page-item.disabled
