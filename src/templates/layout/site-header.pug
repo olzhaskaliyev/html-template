@@ -1,7 +1,17 @@
-header.site-header
-  .container.flex.align-center
-    a(href='/'): b HTML Templates
+header.site-header.navbar.navbar-expand-sm.navbar-dark.bg-dark.sticky-top
+  .container
+    a(href='/').navbar-brand.text-primary: b HTML Template
 
-    nav.site-navigation.flex-right
-      a(href='/category.html') Category
-      a(href='/about.html') About
+    button.navbar-toggler(data-toggle="collapse" data-target=".navbar-collapse")
+      .navbar-toggler-icon
+
+    .navbar-collapse.collapse
+      nav.site-navigation.navbar-nav.ml-auto
+        .nav-item: a(href='/category.html').nav-link.active Home
+        .nav-item.dropdown
+          a(href='/category.html' data-toggle="dropdown").nav-link.dropdown-toggle Categories
+          .dropdown-menu
+            a(href='/category.html').dropdown-item Category 1
+            a(href='/category.html').dropdown-item Category 2
+            a(href='/category.html').dropdown-item Category 3
+        .nav-item: a(href='/about.html').nav-item.nav-link About

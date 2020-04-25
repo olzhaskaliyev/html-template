@@ -2,17 +2,14 @@ doctype html
 html(lang='ru')
   head
     meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    title html-template
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title HTML Template
 
     // build:css styles/libraries.css
-    link(rel='stylesheet', href='/node_modules/bootstrap/dist/css/bootstrap.css')
     // endbuild
 
-    link(href="https://fonts.googleapis.com/css?family=Merriweather:700|Open+Sans:400,400i,700|Press+Start+2P&display=swap&subset=cyrillic" rel="stylesheet")
-
     // build:css styles/main.css
-    link(rel='stylesheet', href='styles/main.css')
+    link(rel='stylesheet' href='/styles/main.css')
     // endbuild
 
   body
@@ -21,8 +18,8 @@ html(lang='ru')
     include layout/site-footer
 
     // build:js scripts/libraries.js
-    script(src='/node_modules/jquery/dist/jquery.js')
-    script(src='/node_modules/bootstrap/dist/js/bootstrap.js')
+    script(src='/node_modules/jquery/dist/jquery.slim.js')
+    script(src='/node_modules/bootstrap/dist/js/bootstrap.bundle.js')
     // endbuild
 
     // build:js scripts/main.js

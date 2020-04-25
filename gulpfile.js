@@ -76,6 +76,7 @@ function files() {
 function serve() {
   browserSync.init({
     notify: false,
+    ghostMode: false,
     port,
     server: {
       baseDir: dev ? ['.tmp', 'src'] : 'dist',
