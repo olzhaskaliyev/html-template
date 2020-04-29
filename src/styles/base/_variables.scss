@@ -1,0 +1,33 @@
+// Colors
+$brand-color: hsl(345, 100%, 50%);
+$brand-color-lighter: hsl(345, 100%, 55%);
+$brand-color-darker: hsl(345, 100%, 45%);
+
+$black: #000;
+$dark: #202020;
+$dark-grey: #606060;
+$grey: #808080;
+$silver: #C0C0C0;
+$light-grey: #E0E0E0;
+$light: #F0F0F0;
+$white: #fff;
+
+$divide: $grey;
+
+$blue: hsl(210, 100%, 50%);
+$green: hsl(150, 100%, 50%);
+$orange: hsl(30, 100%, 50%);
+$red: hsl(345, 100%, 50%);
+
+// Fonts
+$regular-text-color: $dark;
+$regular-font: "Open Sans", sans-serif;
+$header-font: "Merriweather", serif;
+$display-font: "Press Start 2P", cursive;
+$regular-font-size: .875rem;
+$regular-line: 1rem;
+
+// Screens
+$tablet: 720px;
+$tablet-album: 960px;
+$desktop: 1024px;

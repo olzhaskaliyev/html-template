@@ -9,8 +9,8 @@
     "tasks": "gulp --tasks"
   },
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "jquery": "3.4.1"
+    "jquery": "3.4.1",
+    "normalize.css": "^8.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

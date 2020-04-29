@@ -5,11 +5,14 @@ html(lang='ru')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     title HTML Template
 
-    // build:css styles/libraries.css
+    // build:css styles/libraries.min.css
+    link(href='/node_modules/normalize.css/normalize.css' rel='stylesheet')
     // endbuild
 
-    // build:css styles/main.css
-    link(rel='stylesheet' href='/styles/main.css')
+    link(href="https://fonts.googleapis.com/css?family=Merriweather:700|Open+Sans:400,400i,700|Press+Start+2P&display=swap&subset=cyrillic" rel="stylesheet")
+
+    // build:css styles/main.min.css
+    link(href='styles/main.css' rel='stylesheet')
     // endbuild
 
   body
@@ -17,11 +20,10 @@ html(lang='ru')
     block content
     include layout/site-footer
 
-    // build:js scripts/libraries.js
+    // build:js scripts/libraries.min.js
     script(src='/node_modules/jquery/dist/jquery.slim.js')
-    script(src='/node_modules/bootstrap/dist/js/bootstrap.bundle.js')
     // endbuild
 
-    // build:js scripts/main.js
+    // build:js scripts/main.min.js
     script(src='scripts/main.js')
     // endbuild

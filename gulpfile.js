@@ -119,7 +119,16 @@ exports.clean = clean;
 exports.templates = templates;
 exports.styles = styles;
 exports.scripts = scripts;
-exports.minify = minify;
+exports.minify = series(
+  clean,
+  parallel(
+    series(
+      parallel(templates, styles, scripts),
+      minify,
+    ),
+    fonts,
+  ),
+);
 exports.images = images;
 exports.fonts = fonts;
 exports.files = files;

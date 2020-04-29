@@ -1,23 +1,20 @@
+/* Base */
+@import "base/variables";
+@import "base/fonts";
+@import "base/resets";
+@import "base/forms";
 
-$primary: deeppink;
+/* Components */
+@import "components/libraries";
+@import "components/grid";
+@import "components/components";
+@import "components/content";
+@import "components/helpers";
 
-$body-bg: #f2f2f2;
+/* Layout */
+@import "layout/layout";
+@import "layout/header";
+@import "layout/footer";
 
-$btn-focus-width: 0;
-
-$card-border-width: 0;
-
-@import "./node_modules/bootstrap/scss/bootstrap.scss";
-
-.card {
-  box-shadow: $box-shadow-sm;
-}
-
-a.card {
-  color: inherit;
-  transition: $transition-base;
-  &:hover {
-    text-decoration: none;
-    box-shadow: $box-shadow;
-  }
-}
+/* Modules */
+@import "pages/index";
